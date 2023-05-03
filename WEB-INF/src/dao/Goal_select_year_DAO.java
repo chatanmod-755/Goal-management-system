@@ -233,7 +233,7 @@ public class Goal_select_year_DAO extends DAO{
         }
     }
 
-    public boolean checks_child(String goal_id){//子目標が存在するかチェック
+    public boolean check_childs(String goal_id){//子目標が存在するかチェック
         Goal g=new Goal();
         try{
             Connection con = getConnection(); //DBに接続
