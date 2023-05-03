@@ -230,12 +230,40 @@ public class Goal_select_month_DAO extends DAO{
     return list;
     }
 
-    public boolean check_child(String goal_id){//子目標が存在するかチェック
+    public boolean check_child(String goal_month_parent_id){//子目標が存在するかチェック
         Goal g=new Goal();
         try{
+            System.out.println("check_childにきたーー");//削除対象
             Connection con = getConnection(); //DBに接続
             PreparedStatement st;
-            st = con.prepareStatement("select * from goal_month_child where goal_id=?"); //目標DBを削除。
+            st = con.prepareStatement("select * from goal_month_child where parent_id=?"); //子目標が存在するか確認。
+            st.setString(1,goal_month_parent_id);
+            ResultSet rs_check_child_id = st.executeQuery(); //sql文実施
+
+            if (rs_check_child_id.next()){
+              g.setgoal_month_child_id(rs_check_child_id.getString("child_id"));//子目標のidを取得
+            }
+            st.close();
+            con.close();//コネクションを閉じる
+
+            if(g.getgoal_month_child_id() != null){ //子目標が存在するか確認
+              return true;
+            }else{
+              return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean check_childs(String goal_id){//子目標が存在するかチェック
+        Goal g=new Goal();
+        try{
+            System.out.println("check_childにきたーー");//削除対象
+            Connection con = getConnection(); //DBに接続
+            PreparedStatement st;
+            st = con.prepareStatement("select * from goal_month_child where goal_id=?"); //子目標が存在するか確認。
             st.setString(1,goal_id);
             ResultSet rs_check_child_id = st.executeQuery(); //sql文実施
 
