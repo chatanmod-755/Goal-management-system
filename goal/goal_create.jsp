@@ -32,12 +32,11 @@ if (user == null){
 </select>
 
 <label for="start"style="position: absolute; left: 150px; top: 80px" >始まりの日付</label>
-<input type="date" name="start"
-    style="position: absolute; left: 150px; top: 100px"
+<input type="date" name="start" style="position: absolute; height: 25px; left: 150px; top: 100px"
     min="2022-03-01" max="2030-03-01">
 
 <label for="start"style="position: absolute; left: 300px; top: 80px">終わりの日付</label>
-<input type="date" name="end" style="position: absolute; left: 300px; top: 100px"
+<input type="date" name="end" style="position: absolute; height: 25px; left: 300px; top: 100px"
     min="2022-03-01" max="2030-03-01">
 </div>
 
