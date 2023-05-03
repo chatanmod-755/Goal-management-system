@@ -207,13 +207,39 @@ public class Goal_select_year_DAO extends DAO{
     return list;
     }
 
-    public boolean check_child(String goal_id){//子目標が存在するかチェック
+    public boolean check_child(String parent_id){//子目標が存在するかチェック
+        Goal g=new Goal();
+        try{
+            Connection con = getConnection(); //DBに接続
+            PreparedStatement st;
+            st = con.prepareStatement("select * from goal_year_child where parent_id=?");
+            st.setString(1,parent_id); 
+            ResultSet rs_check_child_id = st.executeQuery(); //sql文実施
+
+            if (rs_check_child_id.next()){
+              g.setgoal_year_child_id(rs_check_child_id.getString("parent_id"));//子目標のidを取得
+            }
+            st.close();
+            con.close();
+
+            if(g.getgoal_year_child_id() != null){ //子目標が存在するか確認
+              return true;
+            }else{
+              return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean checks_child(String goal_id){//子目標が存在するかチェック
         Goal g=new Goal();
         try{
             Connection con = getConnection(); //DBに接続
             PreparedStatement st;
             st = con.prepareStatement("select * from goal_year_child where goal_id=?");
-            st.setString(1,goal_id); //入力されたユーザー名
+            st.setString(1,goal_id); 
             ResultSet rs_check_child_id = st.executeQuery(); //sql文実施
 
             if (rs_check_child_id.next()){
